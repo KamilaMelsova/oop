@@ -15,10 +15,10 @@ class Pet {
     }
 /*'void' means method does not return any value*/
     public void setName(String name) {
-        this.name = name;/*method setName() allows changing the pet's name*/
+        this.name = name;/*method setName() allows changing the pet's name, Setters change the values ​​of private fields*/
     }
     public String getType() {
-        return type;/*method getType() returns the type of the pet*/
+        return type;/*method getType() returns the type of the pet. Getters return the value of private fields*/
     }
     public void setType(String type) {
         this.type = type;/*method setType() allows changing the pet's type*/
