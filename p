@@ -69,7 +69,8 @@ class Shelter {
     public void adoptPet(Pet pet) {
         pets.remove(pet);/*method adoptPet() removes a pet from the shelter's list*/
 /*method listPets() prints the list of pets available for adoption.*/    
-    public void listPets() {
+    public void listPets() /*for-each loop. This is a loop that is used to iterate through all the elements of an array.
+i Iterate through all the pets from the pets list and display them on the screen.*/ {
         if (pets.isEmpty()) {
             System.out.println("No pets available for adoption.");
         } else {
