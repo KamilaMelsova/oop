@@ -1,0 +1,200 @@
+import java.util.ArrayList;
+import java.util.Objects;
+
+/*I define a class called "Pet," which acts as a template for creating objects*/
+class Pet {
+    private String name;
+    private String type;
+    private int age; /*I defined 3 private variables for the Pet class:
+                        name, which holds the name of the pet;
+                        type, which specifies the type of the pet;
+                        and age, which stores the age of the pet*/
+
+    /*I define the constructor of the Pet class, which takes parameters to initialize the object*/
+    public Pet(String name, String type, int age) {
+        this.name = name;
+        this.type = type;
+        this.age = age; /*the values of the parameters are assigned to the corresponding fields of the object
+                          using the 'this' keyword, which refers to the current object*/
+    }
+
+    public String getName() {
+        return name; // I define a method called getName(), which returns the name of the pet.
+    }
+
+    /*'void' means method does not return any value*/
+    public void setName(String name) {
+        this.name = name; /*method setName() allows changing the pet's name, Setters change the values of private fields*/
+    }
+
+    public String getType() {
+        return type; /*method getType() returns the type of the pet. Getters return the value of private fields*/
+    }
+
+    public void setType(String type) {
+        this.type = type; /*method setType() allows changing the pet's type*/
+    }
+
+    public int getAge() {
+        return age; /*method getAge() returns the age of the pet*/
+    }
+
+    public void setAge(int age) {
+        this.age = age; /*method setAge() allows changing the pet's age*/
+    }
+
+    /*toString() method is overridden to display info in a more readable format*/
+    @Override
+    public String toString() {
+        return name + " (" + type + ", " + age + " years old)";
+    }
+
+    /*equals() method is overridden to compare pets by their type*/
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true; // Comparing references
+        if (obj == null || getClass() != obj.getClass()) return false; // Checking null and class type
+        Pet pet = (Pet) obj;
+        return Objects.equals(type, pet.type); // Comparing only type field
+    }
+
+    /*hashCode() method generates a hash based on the type field*/
+    @Override
+    public int hashCode() {
+        return Objects.hash(type);
+    }
+}
+
+/*A class Adopter is defined. It represents info about a person who wants to adopt a pet*/
+class Adopter {
+    private String name; /*I define private variables for the adopter's name and contact info*/
+    private String contact;
+
+    /*Constructor for the Adopter class is defined, initializing the name and contact info*/
+    public Adopter(String name, String contact) {
+        this.name = name; /* Private variables*/
+        this.contact = contact; /*'Adopter' represents information about a person who wants to adopt a pet*/
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+}
+
+/*class Shelter is defined. This class manages the pets in the shelter*/
+class Shelter {
+    private String name;
+    private ArrayList<Pet> pets;
+
+    public Shelter(String name) {
+        this.name = name;
+        this.pets = new ArrayList<>(); /*an empty list of pets is initialized*/
+    }
+
+    public void addPet(Pet pet) {
+        pets.add(pet); /*method addPet() adds a pet to the shelter's pet list.*/
+    }
+
+    /*Method for filtering pets by type*/
+    public void filterPetsByType(String type) {
+        System.out.println("Pets of type " + type + ":");
+        for (Pet pet : pets) {
+            if (pet.getType().equalsIgnoreCase(type)) {
+                System.out.println(pet);
+            }
+        }
+    }
+
+    /*Method for filtering pets by age*/
+    public void filterPetsByAge(int minAge, int maxAge) {
+        System.out.println("Pets aged between " + minAge + " and " + maxAge + ":");
+        for (Pet pet : pets) {
+            if (pet.getAge() >= minAge && pet.getAge() <= maxAge) {
+                System.out.println(pet);
+            }
+        }
+    }
+
+    /*Method for finding a pet by name*/
+    public Pet findPetByName(String name) {
+        for (Pet pet : pets) {
+            if (pet.getName().equalsIgnoreCase(name)) {
+                return pet;
+            }
+        }
+        return null; // Return null if no pet found
+    }
+
+    public void adoptPet(Pet pet) {
+        pets.remove(pet); /*Remove the pet from the shelter's list*/
+    }
+
+    public void listPets() {
+        if (pets.isEmpty()) {
+            System.out.println("No pets available for adoption.");
+        } else {
+            System.out.println("Pets in " + name + ":");
+            for (Pet pet : pets) {
+                System.out.println(pet);
+            }
+        }
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+
+/*I created the main class `Main`. The `main()` method is defined as the entry point for the program's execution.*/
+public class Main {
+    public static void main(String[] args) {
+        Pet pet1 = new Pet("Focaccia", "Dog", 3);
+        Pet pet2 = new Pet("Rami", "Cat", 2);
+        Pet pet3 = new Pet("Tostada", "Parrot", 1); /*I create three pet objects, each with a different name, type, and age*/
+
+        Adopter adopter = new Adopter("Akerke", "123456789"); /*I create an adopter object with the name "Akerke" and the contact number*/
+
+        Shelter shelter = new Shelter("PetFinder"); /*I created shelter object with the name "PetFinder"*/
+        shelter.addPet(pet1);
+        shelter.addPet(pet2);
+        shelter.addPet(pet3); /*I add the three pets to the shelter's list of pets.*/
+
+        shelter.listPets(); /*list of all pets available for adoption in the shelter is displayed*/
+
+        // Filter pets by type
+        shelter.filterPetsByType("Dog");
+
+        // Filter pets by age
+        shelter.filterPetsByAge(2, 3);
+
+        // Find a pet by name
+        Pet foundPet = shelter.findPetByName("Rami");
+        if (foundPet != null) {
+            System.out.println("\nFound pet: " + foundPet);
+        } else {
+            System.out.println("\nPet not found.");
+        }
+
+        // Compare pets by type
+        System.out.println("\nComparing pets:");
+        System.out.println(pet1 + " and " + pet2 + " are of the same type: " + pet1.equals(pet2));
+        System.out.println(pet1 + " and " + pet3 + " are of the same type: " + pet1.equals(pet3));
+
+        System.out.println("\nAdopter " + adopter.getName() + " adopts " + pet1.getName() + ".");
+        shelter.adoptPet(pet1); /*A message is displayed saying that adopter "Akerke" is adopting the pet "Focaccia", and then the pet is removed from the shelter's list*/
+
+        shelter.listPets(); /*displays the updated list*/
+    }
+}
