@@ -1,5 +1,5 @@
-import java.util.ArrayList;
-import java.util.Objects;
+import java.util.ArrayList;// Импорт класса ArrayList,используется для хранения списка объектов, например, списка питомцев в приюте.
+import java.util.Objects;// Импорт класса Objects, дает вспомогательные методы для работы с объектами,например сравнение (Objects.equals) и генерация хэш-кода (Objects.hash).
 
 /*I define a class called "Pet," which acts as a template for creating objects*/
 class Pet {
@@ -44,7 +44,7 @@ class Pet {
     }
 
     /*toString() method is overridden to display info in a more readable format*/
-    @Override
+    @Override//Аннотация @Override,помогает избежать ошибок
     public String toString() {
         return name + " (" + type + ", " + age + " years old)";
     }
@@ -52,17 +52,17 @@ class Pet {
     /*equals() method is overridden to compare pets by their type*/
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true; // Comparing references
-        if (obj == null || getClass() != obj.getClass()) return false; // Checking null and class type
-        Pet pet = (Pet) obj;
-        return Objects.equals(type, pet.type); // Comparing only type field
-    }
+        if (this == obj) return true; //сравнение ссылок и если объект и переданный объект один и тот же, возвращает true.
+        if (obj == null || getClass() != obj.getClass()) return false;//eсли объект равен null или объекты принадлежат разным классам, возвращаеt false
+        Pet pet = (Pet) obj;//Приведение объекта к типу Pet, чтобы проверить, объекты принадлежат одному классу.
+        return Objects.equals(type, pet.type);// Сравнение'type'объекта с переданного объекта и возвращает true, если значения полей совпадают
+    } //Метод equals сравнивает объекты, чтобы определить, являются ли они логически равными
 
     /*hashCode() method generates a hash based on the type field*/
     @Override
     public int hashCode() {
-        return Objects.hash(type);
-    }
+        return Objects.hash(type);//метод Objects.hash для создания хэш-кода на основе поля 'type'.
+    }//метод hashCode() генерирует уникальный код для объекта, Хэш-код используется для быстрого поиска объектов
 }
 
 /*A class Adopter is defined. It represents info about a person who wants to adopt a pet*/
@@ -100,8 +100,8 @@ class Shelter {
 
     public Shelter(String name) {
         this.name = name;
-        this.pets = new ArrayList<>(); /*an empty list of pets is initialized*/
-    }
+        this.pets = new ArrayList<>(); /*an empty list of pets is initialized*/ 
+    } //'ArrayList' используется,тк размер списка будет изменяться при добавлении и удалении питомцев.
 
     public void addPet(Pet pet) {
         pets.add(pet); /*method addPet() adds a pet to the shelter's pet list.*/
@@ -110,9 +110,10 @@ class Shelter {
     /*Method for filtering pets by type*/
     public void filterPetsByType(String type) {
         System.out.println("Pets of type " + type + ":");
+//Перебирает всех питомцев в списке 'pets'.
         for (Pet pet : pets) {
             if (pet.getType().equalsIgnoreCase(type)) {
-                System.out.println(pet);
+                System.out.println(pet); //Проверяет, совпадает ли тип текущего питомца с переданным типом
             }
         }
     }
@@ -151,13 +152,12 @@ class Shelter {
             }
         }
     }
-
     public String getName() {
         return name;
     }
 }
 
-/*I created the main class `Main`. The `main()` method is defined as the entry point for the program's execution.*/
+/*I created the main class Main. The main() method is defined as the entry point for the program's execution.*/
 public class Main {
     public static void main(String[] args) {
         Pet pet1 = new Pet("Focaccia", "Dog", 3);
@@ -174,10 +174,10 @@ public class Main {
         shelter.listPets(); /*list of all pets available for adoption in the shelter is displayed*/
 
         // Filter pets by type
-        shelter.filterPetsByType("Dog");
+        shelter.filterPetsByType("Dog"); //Bывела спискок питомцев, отфильтрованных по типу "Dog"
 
         // Filter pets by age
-        shelter.filterPetsByAge(2, 3);
+        shelter.filterPetsByAge(2, 3); //Bывела спискок питомцев, отфильтрованных по возрасту от 2 до 3 лет
 
         // Find a pet by name
         Pet foundPet = shelter.findPetByName("Rami");
@@ -197,4 +197,3 @@ public class Main {
 
         shelter.listPets(); /*displays the updated list*/
     }
-}
